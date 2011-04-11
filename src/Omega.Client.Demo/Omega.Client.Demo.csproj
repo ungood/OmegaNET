@@ -47,7 +47,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Alpha.Client\Omega.Client.csproj">
+    <ProjectReference Include="..\Omega.Client\Omega.Client.csproj">
       <Project>{078FF91C-52E8-48BE-B2B6-9A0E1965478A}</Project>
       <Name>Omega.Client</Name>
     </ProjectReference>
