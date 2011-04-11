@@ -1,0 +1,46 @@
+﻿using System.Collections.Generic;
+using System.Diagnostics.Contracts;
+
+namespace Omega.Client.FileSystem
+{
+    public enum FileType : byte
+    {
+        Text    = 0x41,
+        String  = 0x42,
+        Picture = 0x43
+    }
+
+    public enum FileProtection : byte
+    {
+        Unlocked = 0x55,
+        Locked   = 0x4c,
+    }
+
+    public abstract class SignFileInfo
+    {
+        public FileType Type { get; private set; }
+        public bool IsLocked { get; set; }
+
+        public abstract string GetSizeField();
+        public abstract string GetDataField();
+        
+        protected SignFileInfo(FileType type, bool isLocked = false)
+        {
+            Type = type;
+            IsLocked = isLocked;
+        }
+    }
+
+    public abstract class SignFile
+    {
+        public FileLabel Label { get; set; }
+
+        public abstract SignFileInfo CreateFileInfo();
+        public abstract IEnumerable<byte> GetBytes();
+
+        protected SignFile(FileLabel label)
+        {
+            Label = label;
+        }
+    }
+}
