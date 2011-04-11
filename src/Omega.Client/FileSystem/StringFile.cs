@@ -2,6 +2,7 @@
 using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
+using Omega.Client.Formatting;
 
 namespace Omega.Client.FileSystem
 {
@@ -56,7 +57,9 @@ namespace Omega.Client.FileSystem
         public override IEnumerable<byte> GetBytes()
         {
             yield return Label;
-            foreach(var b in Encoding.UTF8.GetBytes(Text))
+
+            var formatted = FormatParser.Format(Text);
+            foreach(var b in Encoding.UTF8.GetBytes(formatted))
                 yield return b;
         }
     }

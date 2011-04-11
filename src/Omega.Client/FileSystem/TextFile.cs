@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
+using Omega.Client.Formatting;
 
 namespace Omega.Client.FileSystem
 {
@@ -95,7 +96,8 @@ namespace Omega.Client.FileSystem
                 if(line.Text == null)
                     yield break;
 
-                foreach(var b in Encoding.UTF8.GetBytes(line.Text))
+                var formatted = FormatParser.Format(line.Text);
+                foreach(var b in Encoding.UTF8.GetBytes(formatted))
                     yield return b;
             }
         }
