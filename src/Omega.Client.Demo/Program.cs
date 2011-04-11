@@ -26,7 +26,7 @@ namespace Omega.Client.Demo
                 conn.Open();
 
                 //Clear(conn);
-                Thread.Sleep(10000);
+                //Thread.Sleep(10000);
 
                 //Blah(conn);
                 DemoWriteTextCommands(conn);
@@ -65,7 +65,7 @@ namespace Omega.Client.Demo
                 //DemoTime(packet),
                 DemoFormatting()
             };
-            files.AddRange(DemoGraphics());
+            //files.AddRange(DemoGraphics());
 
             var memory = new MemoryConfig();
             foreach(var file in files)
@@ -148,7 +148,7 @@ namespace Omega.Client.Demo
         private static TextFile DemoFormatting()
         {
             return new TextFile('L') {
-                {"ÇüéâäàåçêëèïîìÄÅÉæÆôöòûùÿÖÜ¢£¥℞ƒáíóúñÑªº¿°¡ øØćĆčČđÐŠžŽΒšβÁÀÃãÊÍÕõ€ ↑↓←→", DisplayMode.Rotate}
+                {"\x15ÇüéâäàåçêëèïîìÄÅÉæÆôöòûùÿÖÜ¢£¥℞ƒáíóúñÑªº¿°¡ øØćĆčČđÐŠžŽΒšβÁÀÃãÊÍÕõ€\x08\x63↑↓←→", DisplayMode.Rotate}
             };
         }
 
