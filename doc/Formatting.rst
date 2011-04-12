@@ -2,8 +2,10 @@ OmegaNET supports a HTML-*like* syntax for formatting text values.  The main dif
 
 Format
 ======
-``<flash></flash>``    Turns on/off character flashing.
-``<high></high>``      Turns on/off double-high characters.
+``<flash></flash>``
+  Turns on/off character flashing.
+``<high></high>``
+  Turns on/off double-high characters.
 
     // Call
     //   <date format />
