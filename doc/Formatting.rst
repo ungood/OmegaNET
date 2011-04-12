@@ -1,9 +1,9 @@
 OmegaNET supports a HTML-*like* syntax for formatting text values.  The main difference from HTML is that there is no real relationship between open and close tags, they are just ways to turn on/off various features.  For example: ``<wide>`` turns on wide characters, and ``</wide>`` turns off wide characters.  It is not required, however to properly close ``<wide>`` nor is it necessary to nest properly.
 
 Format
-=====
-``<flash></flash>``
-  Turns on/off character flashing.
+======
+``<flash></flash>``    Turns on/off character flashing.
+``<high></high>``      Turns on/off double-high characters.
 
     // Call
     //   <date format />
