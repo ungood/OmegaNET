@@ -20,6 +20,8 @@ Format
   Turns on/off fancy characters.
 ``<shadow></shadow>``
   Turns on/off shadowed characters.
+``<auxiliary></auxiliary>``
+  Turns on/off the auxiliary port (Series 4000/7000).
 ``<font name>``
   Sets the font to one of: **TODO**
 ``<color name>``
