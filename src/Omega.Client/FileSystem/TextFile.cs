@@ -96,7 +96,7 @@ namespace Omega.Client.FileSystem
                 if(line.Text == null)
                     yield break;
 
-                var formatted = FormatParser.Format(line.Text);
+                var formatted = FormatExtensions.Format(line.Text);
                 foreach(var b in Encoding.UTF8.GetBytes(formatted))
                     yield return b;
             }

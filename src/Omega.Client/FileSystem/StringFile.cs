@@ -58,7 +58,7 @@ namespace Omega.Client.FileSystem
         {
             yield return Label;
 
-            var formatted = FormatParser.Format(Text);
+            var formatted = FormatExtensions.Format(Text);
             foreach(var b in Encoding.UTF8.GetBytes(formatted))
                 yield return b;
         }

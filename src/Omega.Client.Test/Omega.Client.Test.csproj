@@ -52,7 +52,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ChecksumFixture.cs" />
-    <Compile Include="Formatting\FormatParserFixture.cs" />
+    <Compile Include="Formatting\ExtendedCharsFormatterFixture.cs" />
+    <Compile Include="Formatting\TagFormatterFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TextFileExamples.cs" />
     <Compile Include="TimeFixture.cs" />
