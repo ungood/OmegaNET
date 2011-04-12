@@ -79,10 +79,20 @@
     <Compile Include="Connection\PacketWriter.cs" />
     <Compile Include="Connection\StandardPacketFormat.cs" />
     <Compile Include="FileSystem\MemoryConfig.cs" />
-    <Compile Include="Formatting\Enums.cs" />
-    <Compile Include="Formatting\FormatParser.cs" />
-    <Compile Include="Formatting\PrettyPrinter.cs" />
     <Compile Include="FileSystem\SignFile.cs" />
+    <Compile Include="Formatting\ExtendedCharsFormatter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Formatting\FormatExtensions.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Formatting\IFormatter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Formatting\PrettyPrintExtensions.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Formatting\TagFormatter.cs" />
     <Compile Include="IConnection.cs" />
     <Compile Include="Commands\Command.cs" />
     <Compile Include="FileSystem\FileLabel.cs" />

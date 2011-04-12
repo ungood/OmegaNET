@@ -26,13 +26,13 @@ namespace Omega.Client.Demo
                 conn.Open();
 
                 //Clear(conn);
-                Thread.Sleep(10000);
+                //Thread.Sleep(10000);
 
                 Blah(conn);
                 //DemoWriteTextCommands(conn);
             }
 
-            //Console.ReadLine();
+            Console.ReadLine();
         }
 
         private static void Clear(IConnection conn)
@@ -44,14 +44,22 @@ namespace Omega.Client.Demo
 
         private static void Blah(IConnection conn)
         {
-            var file = new TextFile('A') {
-                {"IF YOU WANT YOUR STAPLER BRING ONE ... MILLION DOLLARS TO THE TORCH AT MIDNIGHT", DisplayMode.Rotate},
-                {"ANONYMOUS", SpecialMode.Sparkle},
+            var a = new TextFile('A') {
+                {"<speed 5/>IF YOU WANT YOUR STAPLER BRING <speed 1/>ONE. MILLION. DOLLARS.<speed 5/> TO THE TORCH AT MIDNIGHT", DisplayMode.Rotate},
             };
+            var b = new TextFile('B') {SpecialGraphic.DontDrinkAndDrive};
+            var c = new TextFile('C') {
+                {"WELCOME TO BLACKFIN<line/>NOW 100% MORE", DisplayMode.Scroll},
+                {"<wide>XTREME</wide>", SpecialMode.Sparkle}
+            };
+            var d = new TextFile('D') {"<speed 1/><time/>"};
 
             var packet = conn.CreatePacket();
-            packet.SetMemory(new MemoryConfig {file});
-            packet.Add(new WriteTextCommand(file));
+            packet.SetMemory(new MemoryConfig {a, b, c, d});
+            packet.Add(new WriteTextCommand(a));
+            packet.Add(new WriteTextCommand(b));
+            packet.Add(new WriteTextCommand(c));
+            packet.Add(new WriteTextCommand(d));
             packet.Send();
         }
 
@@ -60,11 +68,11 @@ namespace Omega.Client.Demo
             var packet = conn.CreatePacket();
 
             var files = new List<TextFile>() {
-                DemoDisplayModes(),
-                DemoSpecialModes(),
-                DemoTime(packet)
+                //DemoDisplayModes(),
+                //DemoSpecialModes(),
+                DemoFormatting()
             };
-            files.AddRange(DemoGraphics());
+            //files.AddRange(DemoGraphics());
 
             var memory = new MemoryConfig();
             foreach(var file in files)
@@ -76,6 +84,8 @@ namespace Omega.Client.Demo
             
             packet.Send();
         }
+
+        #region Text File Modes
 
         private static TextFile DemoDisplayModes()
         {
@@ -135,14 +145,41 @@ namespace Omega.Client.Demo
             };
         }
 
+        #endregion
+
+        #region Formatting
+
+        private static TextFile DemoFormatting()
+        {
+            return new TextFile('K') {
+                {"<flash>FLASH</flash>", DisplayMode.Scroll},
+                {"<high>FLASH</high>", DisplayMode.Scroll},
+                {"<desc>DESCENDERS</desc>", DisplayMode.Scroll},
+                {"<wide>WIDE</wide>", DisplayMode.Scroll},
+                {"<double>DOUBLE WIDE</double>", DisplayMode.Scroll},
+                {"<fixed>FIXED</fixed>", DisplayMode.Scroll},
+                {"<fancy>FANCY</fancy>", DisplayMode.Scroll},
+                {"<shadows>FLASH</shadows>", DisplayMode.Scroll},
+            };
+        }
+
         private static TextFile DemoTime(Packet packet)
         {
             packet.SetDateTime(DateTime.Now);
 
-            return new TextFile('K') {
+            return new TextFile('L') {
                 {"\u0013", DisplayMode.AutoMode}
             };
         }
+
+        private static TextFile DemoExtendedChars()
+        {
+            return new TextFile('M') {
+                {"\x15ÇüéâäàåçêëèïîìÄÅÉæÆôöòûùÿÖÜ¢£¥℞ƒáíóúñÑªº¿°¡ øØćĆčČđÐŠžŽΒšβÁÀÃãÊÍÕõ€\x08\x63↑↓←→", DisplayMode.Rotate}
+            };
+        }
+
+        #endregion
 
         private static void DemoStrings(IConnection conn)
         {
