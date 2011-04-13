@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics.Contracts;
-using System.Text;
 using Omega.Client.FileSystem;
 
 namespace Omega.Client.Commands
@@ -12,7 +10,6 @@ namespace Omega.Client.Commands
         public WriteTextCommand(TextFile file)
             : base(CommandCode.WriteText)
         {
-            Contract.Requires(file != null);
             File = file;
         }
 

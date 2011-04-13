@@ -86,7 +86,7 @@ namespace Omega.Client
             Add(new SetMemoryCommand());
         }
 
-        public void SetMemory(MemoryConfig config)
+        public void SetMemory(FileTable config)
         {
             Add(new SetMemoryCommand(config));
         }

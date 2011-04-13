@@ -1,11 +1,5 @@
-﻿using System;
-using System.Diagnostics;
-using System.Diagnostics.Contracts;
+﻿using System.Diagnostics;
 using System.IO;
-using System.IO.Ports;
-using System.Linq;
-using System.Threading;
-using Omega.Client.Commands;
 using Omega.Client.Formatting;
 
 namespace Omega.Client.Connection
@@ -30,7 +24,7 @@ namespace Omega.Client.Connection
         public class Writer : PacketWriter
         {
             public Writer(Stream stream) : base(stream) {}
-            
+
             protected override void WriteByte(byte b)
             {
                 Trace.Write(b.PrettyPrint());

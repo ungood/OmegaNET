@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Diagnostics.Contracts;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Threading;
 using Omega.Client.Commands;
@@ -30,7 +28,7 @@ namespace Omega.Client.Connection
         private void WriteEnum(Enum e, int repeat = 1)
         {
             for(int i = 0; i < repeat; i++)
-                WriteByte((byte)(object)e);
+                WriteByte((byte) (object) e);
         }
 
         private void Write(string s)

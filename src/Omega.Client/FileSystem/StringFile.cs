@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using Omega.Client.Formatting;
@@ -9,12 +8,6 @@ namespace Omega.Client.FileSystem
     public class StringFileInfo : SignFileInfo
     {
         public int Size { get; set; }
-
-        [ContractInvariantMethod]
-        private void ObjectInvariant()
-        {
-            Contract.Invariant(IsLocked);
-        }
 
         public StringFileInfo(int size = 0) : base(FileType.String)
         {
@@ -37,12 +30,6 @@ namespace Omega.Client.FileSystem
     {
         public string Text { get; private set; }
 
-        [ContractInvariantMethod]
-        private void ObjectInvariant()
-        {
-            Contract.Invariant((byte) Label != 0x30 && (byte) Label != 0x3F);
-        }
-
         public StringFile(FileLabel label, string text)
             : base(label)
         {
@@ -58,7 +45,7 @@ namespace Omega.Client.FileSystem
         {
             yield return Label;
 
-            var formatted = FormatExtensions.Format(Text);
+            var formatted = Text.Format();
             foreach(var b in Encoding.UTF8.GetBytes(formatted))
                 yield return b;
         }

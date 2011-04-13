@@ -55,7 +55,7 @@ namespace Omega.Client.Demo
             var d = new TextFile('D') {"<speed 1/><time/>"};
 
             var packet = conn.CreatePacket();
-            packet.SetMemory(new MemoryConfig {a, b, c, d});
+            packet.SetMemory(new FileTable {a, b, c, d});
             packet.Add(new WriteTextCommand(a));
             packet.Add(new WriteTextCommand(b));
             packet.Add(new WriteTextCommand(c));
@@ -74,7 +74,7 @@ namespace Omega.Client.Demo
             };
             //files.AddRange(DemoGraphics());
 
-            var memory = new MemoryConfig();
+            var memory = new FileTable();
             foreach(var file in files)
                 memory.Add(file);
             packet.SetMemory(memory);
@@ -189,7 +189,7 @@ namespace Omega.Client.Demo
                 {"\u0019 \u0010C", DisplayMode.Scroll}
             };
 
-            packet.SetMemory(new MemoryConfig {
+            packet.SetMemory(new FileTable {
                 {'C', new StringFileInfo(10)},
                 text
             });

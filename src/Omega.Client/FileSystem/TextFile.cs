@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using Omega.Client.Formatting;
@@ -21,7 +19,7 @@ namespace Omega.Client.FileSystem
             StartTime = StartStopTime.Always;
             StopTime = StartStopTime.Always;
         }
-        
+
         public override string GetSizeField()
         {
             return Size.ToString("X4");
@@ -29,25 +27,24 @@ namespace Omega.Client.FileSystem
 
         public override string GetDataField()
         {
-            return StartTime.ToString() + StopTime.ToString();
+            return StartTime + StopTime.ToString();
         }
     }
 
     public class TextFile : SignFile, IEnumerable<TextFileLine>
     {
         private List<TextFileLine> lines = new List<TextFileLine>();
-        
+
         public TextFile(FileLabel label)
             : base(label) {}
 
         public void Add(TextFileLine line)
         {
-            Contract.Requires(line != null);
-            
             lines.Add(line);
         }
 
-        public void Add(string text, DisplayMode mode = DisplayMode.AutoMode, DisplayPosition position = DisplayPosition.Middle)
+        public void Add(string text, DisplayMode mode = DisplayMode.AutoMode,
+            DisplayPosition position = DisplayPosition.Middle)
         {
             lines.Add(new TextFileLine(text, mode, position));
         }
@@ -96,7 +93,7 @@ namespace Omega.Client.FileSystem
                 if(line.Text == null)
                     yield break;
 
-                var formatted = FormatExtensions.Format(line.Text);
+                var formatted = line.Text.Format();
                 foreach(var b in Encoding.UTF8.GetBytes(formatted))
                     yield return b;
             }
@@ -110,8 +107,9 @@ namespace Omega.Client.FileSystem
         public SpecialMode SpecialMode { get; set; }
         public SpecialGraphic SpecialGraphic { get; set; }
         public string Text { get; set; }
-        
-        public TextFileLine(string text, DisplayMode mode = DisplayMode.AutoMode, DisplayPosition position = DisplayPosition.Middle)
+
+        public TextFileLine(string text, DisplayMode mode = DisplayMode.AutoMode,
+            DisplayPosition position = DisplayPosition.Middle)
         {
             Text = text;
             Position = position;

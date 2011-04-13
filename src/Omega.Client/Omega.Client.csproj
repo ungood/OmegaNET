@@ -27,7 +27,7 @@
     <CodeContractsRuntimeThrowOnFailure>True</CodeContractsRuntimeThrowOnFailure>
     <CodeContractsRuntimeCallSiteRequires>False</CodeContractsRuntimeCallSiteRequires>
     <CodeContractsRuntimeSkipQuantifiers>False</CodeContractsRuntimeSkipQuantifiers>
-    <CodeContractsRunCodeAnalysis>True</CodeContractsRunCodeAnalysis>
+    <CodeContractsRunCodeAnalysis>False</CodeContractsRunCodeAnalysis>
     <CodeContractsNonNullObligations>True</CodeContractsNonNullObligations>
     <CodeContractsBoundsObligations>True</CodeContractsBoundsObligations>
     <CodeContractsArithmeticObligations>False</CodeContractsArithmeticObligations>
@@ -78,7 +78,7 @@
     <Compile Include="Connection\Checksum.cs" />
     <Compile Include="Connection\PacketWriter.cs" />
     <Compile Include="Connection\StandardPacketFormat.cs" />
-    <Compile Include="FileSystem\MemoryConfig.cs" />
+    <Compile Include="FileSystem\FileTable.cs" />
     <Compile Include="FileSystem\SignFile.cs" />
     <Compile Include="Formatting\ExtendedCharsFormatter.cs">
       <SubType>Code</SubType>

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using System.Text;
 using Omega.Client.FileSystem;
 
@@ -7,11 +6,11 @@ namespace Omega.Client.Commands
 {
     public class SetMemoryCommand : WriteSpecialCommand
     {
-        public MemoryConfig Config { get; private set; }
+        public FileTable Config { get; private set; }
 
-        public SetMemoryCommand(MemoryConfig config = null) : base("$")
+        public SetMemoryCommand(FileTable config = null) : base("$")
         {
-            Config = config ?? new MemoryConfig();
+            Config = config ?? new FileTable();
         }
 
         protected override IEnumerable<byte> GetSpecialFunctionData()

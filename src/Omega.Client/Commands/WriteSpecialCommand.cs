@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 
@@ -12,7 +11,6 @@ namespace Omega.Client.Commands
         protected WriteSpecialCommand(string function)
             : base(CommandCode.WriteSpecial)
         {
-            Contract.Requires(function != null);
             Function = function;
         }
 
