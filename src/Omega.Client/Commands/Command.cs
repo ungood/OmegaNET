@@ -22,6 +22,30 @@ using Omega.Client.Connection;
 
 namespace Omega.Client.Commands
 {
+    public enum CommandCode : byte
+    {
+        WriteText = (byte) 'A',
+        ReadText = (byte) 'B',
+
+        WriteSpecial = (byte) 'E',
+        ReadSpecial = (byte) 'F',
+
+        WriteString = (byte) 'G',
+        ReadString = (byte) 'H',
+
+        WriteSmallDotsPicture = (byte) 'I',
+        ReadSmallDotsPicture = (byte) 'J',
+
+        WriteRgbDotsPicture = (byte) 'K',
+        ReadRgbDotsPicture = (byte) 'L',
+
+        WriteLargeDotsPicture = (byte) 'M',
+        ReadLargeDotsPicture = (byte) 'N',
+
+        WriteBulletin = (byte) '0',
+        SetTimeoutMessage = (byte) 'T'
+    }
+
     public abstract class Command
     {
         protected Command(CommandCode commandCode)

@@ -1,4 +1,23 @@
-﻿using System.Collections;
+﻿#region License
+
+// Copyright 2011 Jason Walker
+// ungood@onetrue.name
+// 
+// Licensed under the Apache License, Version 2.0 (the "License"); 
+// you may not use this file except in compliance with the License. 
+// You may obtain a copy of the License at 
+// 
+//     http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS, 
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and 
+// limitations under the License.
+
+#endregion
+
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,37 +25,26 @@ using Omega.Client.Formatting;
 
 namespace Omega.Client.FileSystem
 {
-    public class TextFileInfo : SignFileInfo
-    {
-        public StartStopTime StartTime { get; set; }
-        public StartStopTime StopTime { get; set; }
-        public int Size { get; set; }
-
-        public TextFileInfo(int size = 0)
-            : base(FileType.Text)
-        {
-            Size = size;
-            StartTime = StartStopTime.Always;
-            StopTime = StartStopTime.Always;
-        }
-
-        public override string GetSizeField()
-        {
-            return Size.ToString("X4");
-        }
-
-        public override string GetDataField()
-        {
-            return StartTime + StopTime.ToString();
-        }
-    }
-
     public class TextFile : SignFile, IEnumerable<TextFileLine>
     {
-        private List<TextFileLine> lines = new List<TextFileLine>();
+        private readonly List<TextFileLine> lines = new List<TextFileLine>();
 
         public TextFile(FileLabel label)
             : base(label) {}
+
+        #region IEnumerable<TextFileLine> Members
+
+        public IEnumerator<TextFileLine> GetEnumerator()
+        {
+            return lines.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        #endregion
 
         public void Add(TextFileLine line)
         {
@@ -65,16 +73,6 @@ namespace Omega.Client.FileSystem
             return new TextFileInfo(bytes.Count());
         }
 
-        public IEnumerator<TextFileLine> GetEnumerator()
-        {
-            return lines.GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-
         public override IEnumerable<byte> GetBytes()
         {
             yield return Label;
@@ -97,38 +95,6 @@ namespace Omega.Client.FileSystem
                 foreach(var b in Encoding.UTF8.GetBytes(formatted))
                     yield return b;
             }
-        }
-    }
-
-    public class TextFileLine
-    {
-        public DisplayPosition Position { get; set; }
-        public DisplayMode Mode { get; set; }
-        public SpecialMode SpecialMode { get; set; }
-        public SpecialGraphic SpecialGraphic { get; set; }
-        public string Text { get; set; }
-
-        public TextFileLine(string text, DisplayMode mode = DisplayMode.AutoMode,
-            DisplayPosition position = DisplayPosition.Middle)
-        {
-            Text = text;
-            Position = position;
-            Mode = mode;
-        }
-
-        public TextFileLine(string text, SpecialMode mode, DisplayPosition position = DisplayPosition.Middle)
-        {
-            Text = text;
-            Position = position;
-            Mode = DisplayMode.Special;
-            SpecialMode = mode;
-        }
-
-        public TextFileLine(SpecialGraphic graphic, DisplayPosition position = DisplayPosition.Middle)
-        {
-            Position = position;
-            Mode = DisplayMode.Special;
-            SpecialGraphic = graphic;
         }
     }
 }

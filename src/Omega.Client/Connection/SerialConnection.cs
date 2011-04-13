@@ -1,9 +1,27 @@
-﻿using System;
+﻿#region License
+
+// Copyright 2011 Jason Walker
+// ungood@onetrue.name
+// 
+// Licensed under the Apache License, Version 2.0 (the "License"); 
+// you may not use this file except in compliance with the License. 
+// You may obtain a copy of the License at 
+// 
+//     http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS, 
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and 
+// limitations under the License.
+
+#endregion
+
+using System;
 using System.IO.Ports;
 using System.Text;
-using Omega.Client.Connection;
 
-namespace Omega.Client.Serial
+namespace Omega.Client.Connection
 {
     /// <summary>
     /// An implementation of IConnection that communicates through the serial port.
@@ -15,6 +33,8 @@ namespace Omega.Client.Serial
         public SerialConnection(SerialPort port)
         {
             this.port = port;
+
+            PacketFormat = new StandardPacketFormat();
         }
 
         public SerialConnection(string portName,
@@ -25,37 +45,31 @@ namespace Omega.Client.Serial
         {
             port = new SerialPort(portName, baudRate, parity, dataBits, stopBits) {
                 Encoding = Encoding.UTF8,
-                Handshake = Handshake.RequestToSend
+                Handshake = Handshake.None,
             };
+
+            PacketFormat = new StandardPacketFormat();
         }
 
+        public PacketFormat PacketFormat { get; set; }
+        
         public void Open()
         {
             port.Open();
         }
 
-        public Packet CreatePacket(SignType type = SignType.AllSigns, SignAddress address = null, PacketFormat format = null)
+        public void Send(Packet packet)
         {
-            if(address == null)
-                address = SignAddress.Broadcast;
+            port.ReadTimeout = PacketFormat.ReadTimeout;
+            port.WriteTimeout = PacketFormat.WriteTimeout;
 
-            if(format == null)
-                format = PacketFormat.Standard;
-
-            port.ReadTimeout  = format.ReadTimeout;
-            port.WriteTimeout = format.WriteTimeout;
-
-            return new Packet(port.BaseStream, format, type, address);
+            var writer = PacketFormat.CreateWriter(port.BaseStream);
+            writer.WritePacket(packet);
         }
 
         #region IDisposable
 
         private bool isDisposed;
-
-        ~SerialConnection()
-        {
-            Dispose(false);
-        }
 
         public void Dispose()
         {
@@ -63,15 +77,20 @@ namespace Omega.Client.Serial
             GC.SuppressFinalize(this);
         }
 
+        ~SerialConnection()
+        {
+            Dispose(false);
+        }
+
         protected virtual void Dispose(bool disposeManagedResources)
         {
-            if (!isDisposed)
+            if(!isDisposed)
             {
                 if(disposeManagedResources)
                 {
                     port.Close();
                 }
-                isDisposed=true;
+                isDisposed = true;
             }
         }
 

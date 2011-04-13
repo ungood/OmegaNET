@@ -2,25 +2,22 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO.Ports;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using Omega.Client.Commands;
+using Omega.Client.Connection;
 using Omega.Client.FileSystem;
-using Omega.Client.Formatting;
-using Omega.Client.Serial;
 
 namespace Omega.Client.Demo
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             var consoleListener = new TextWriterTraceListener(Console.Out);
             Trace.Listeners.Add(consoleListener);
 
-            var portName = "COM1";
-            //var portName = args.Length > 1 ? args[1] : GetPortName();
+            var portName = args.Length > 1 ? args[1] : GetPortName();
+
             using(var conn = new SerialConnection(portName))
             {
                 conn.Open();
@@ -28,61 +25,64 @@ namespace Omega.Client.Demo
                 //Clear(conn);
                 //Thread.Sleep(10000);
 
-                Blah(conn);
+                conn.Send(BlackfinDemo());
                 //DemoWriteTextCommands(conn);
             }
 
             Console.ReadLine();
         }
 
-        private static void Clear(IConnection conn)
+        private static Packet Clear()
         {
-            var packet = conn.CreatePacket();
+            var packet = new Packet();
             packet.ClearMemory();
-            packet.Send();
+            return packet;
         }
 
-        private static void Blah(IConnection conn)
+        private static Packet BlackfinDemo()
         {
-            var a = new TextFile('A') {
-                {"<speed 5/>IF YOU WANT YOUR STAPLER BRING <speed 1/>ONE. MILLION. DOLLARS.<speed 5/> TO THE TORCH AT MIDNIGHT", DisplayMode.Rotate},
+            var files = new List<TextFile> {
+                new TextFile('A') {
+                    {"<speed 5/>IF YOU WANT YOUR STAPLER BRING <speed 1/>ONE. MILLION. DOLLARS.<speed 5/> TO THE TORCH AT MIDNIGHT", DisplayMode.Rotate},
+                },
+                new TextFile('B') {
+                    SpecialGraphic.DontDrinkAndDrive
+                },
+                new TextFile('C') {
+                    {"WELCOME TO BLACKFIN<line/>NOW 100% MORE", DisplayMode.Scroll},
+                    {"<wide>XTREME</wide>", SpecialMode.Sparkle}
+                },
+                new TextFile('D') {"<speed 1/><time/>"}
             };
-            var b = new TextFile('B') {SpecialGraphic.DontDrinkAndDrive};
-            var c = new TextFile('C') {
-                {"WELCOME TO BLACKFIN<line/>NOW 100% MORE", DisplayMode.Scroll},
-                {"<wide>XTREME</wide>", SpecialMode.Sparkle}
-            };
-            var d = new TextFile('D') {"<speed 1/><time/>"};
-
-            var packet = conn.CreatePacket();
-            packet.SetMemory(new FileTable {a, b, c, d});
-            packet.Add(new WriteTextCommand(a));
-            packet.Add(new WriteTextCommand(b));
-            packet.Add(new WriteTextCommand(c));
-            packet.Add(new WriteTextCommand(d));
-            packet.Send();
+            
+            var packet = new Packet();
+            packet.SetMemory(new FileTable(files));
+            packet.WriteText(files);
+            return packet;
         }
 
-        private static void DemoWriteTextCommands(IConnection conn)
+        private static Packet DemoWriteTextCommands()
         {
-            var packet = conn.CreatePacket();
+            var packet = new Packet();
 
-            var files = new List<TextFile>() {
-                //DemoDisplayModes(),
-                //DemoSpecialModes(),
+            var files = new List<TextFile> {
+                DemoDisplayModes(),
+                DemoSpecialModes(),
                 DemoFormatting()
             };
-            //files.AddRange(DemoGraphics());
+            files.AddRange(DemoGraphics());
+
 
             var memory = new FileTable();
             foreach(var file in files)
                 memory.Add(file);
             packet.SetMemory(memory);
 
+
             foreach(var file in files)
                 packet.Add(new WriteTextCommand(file));
-            
-            packet.Send();
+
+            return packet;
         }
 
         #region Text File Modes
@@ -107,7 +107,10 @@ namespace Omega.Client.Demo
                 {"WIPE OUT", DisplayMode.WipeOut},
                 {"SCROLL", DisplayMode.Scroll},
                 {"AUTOMODE", DisplayMode.AutoMode},
-                {"ROTATE COMPRESSED ROTATE COMPRESSED ROTATE COMPRESSED ROTATE COMPRESSED ROTATE COMPRESSED ROTATE", DisplayMode.CompressedRotate},
+                {
+                    "ROTATE COMPRESSED ROTATE COMPRESSED ROTATE COMPRESSED ROTATE COMPRESSED ROTATE COMPRESSED ROTATE",
+                    DisplayMode.CompressedRotate
+                    },
                 {"EXPLODE", DisplayMode.Explode},
                 {"CLOCK", DisplayMode.Clock}
             };
@@ -175,7 +178,10 @@ namespace Omega.Client.Demo
         private static TextFile DemoExtendedChars()
         {
             return new TextFile('M') {
-                {"\x15ÇüéâäàåçêëèïîìÄÅÉæÆôöòûùÿÖÜ¢£¥℞ƒáíóúñÑªº¿°¡ øØćĆčČđÐŠžŽΒšβÁÀÃãÊÍÕõ€\x08\x63↑↓←→", DisplayMode.Rotate}
+                {
+                    "\x15ÇüéâäàåçêëèïîìÄÅÉæÆôöòûùÿÖÜ¢£¥℞ƒáíóúñÑªº¿°¡ øØćĆčČđÐŠžŽΒšβÁÀÃãÊÍÕõ€\x08\x63↑↓←→",
+                    DisplayMode.Rotate
+                    }
             };
         }
 
@@ -183,10 +189,10 @@ namespace Omega.Client.Demo
 
         private static void DemoStrings(IConnection conn)
         {
-            var packet = conn.CreatePacket();
+            var packet = new Packet();
 
             var text = new TextFile('A') {
-                {"\u0019 \u0010C", DisplayMode.Scroll}
+                {"<string C/>", DisplayMode.Scroll}
             };
 
             packet.SetMemory(new FileTable {
@@ -195,13 +201,13 @@ namespace Omega.Client.Demo
             });
 
             packet.Add(new WriteTextCommand(text));
-            packet.Send();
+            conn.Send(packet);
 
             for(int i = 0; i < 60; i++)
             {
-                packet = conn.CreatePacket();
+                packet = new Packet();
                 packet.Add(new WriteStringCommand(new StringFile('C', i.ToString("000"))));
-                packet.Send();
+                conn.Send(packet);
                 Thread.Sleep(1000);
             }
         }

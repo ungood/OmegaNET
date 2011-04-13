@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Text;
-using System.Threading;
 using Omega.Client.Commands;
 
 namespace Omega.Client.Connection
@@ -18,49 +16,33 @@ namespace Omega.Client.Connection
         }
 
         protected abstract void WriteByte(byte b);
+        protected abstract void WriteHeader(SignType signType, SignAddress address);
+        protected abstract void WriteCommand(Command command);
+        protected abstract void EndTransmission();
 
-        private void WriteBytes(IEnumerable<byte> bytes)
+        protected void WriteBytes(IEnumerable<byte> bytes)
         {
             foreach(var b in bytes)
                 WriteByte(b);
         }
 
-        private void WriteEnum(Enum e, int repeat = 1)
+        protected void WriteEnum(Enum e, int repeat = 1)
         {
             for(int i = 0; i < repeat; i++)
                 WriteByte((byte) (object) e);
         }
 
-        private void Write(string s)
+        protected void Write(string s)
         {
             WriteBytes(Encoding.UTF8.GetBytes(s));
         }
 
-        public void WriteHeader(SignType signType, SignAddress address)
+        public void WritePacket(Packet packet)
         {
-            WriteEnum(Ascii.NUL, 5);
-            WriteEnum(Ascii.SOH);
-            WriteEnum(signType);
-            Write("00");
-            Trace.WriteLine("");
-        }
-
-        public void WriteCommand(Command command)
-        {
-            WriteEnum(Ascii.STX);
-            Thread.Sleep(100);
-
-            WriteEnum(command.CommandCode);
-            WriteBytes(command.GetDataField());
-            WriteEnum(Ascii.ETX);
-            Write(command.CalcChecksum().ToString());
-            Trace.WriteLine("");
-        }
-
-        public void EndTransmission()
-        {
-            WriteEnum(Ascii.EOT);
-            Trace.WriteLine("");
+            WriteHeader(packet.SignType, packet.Address);
+            foreach(var command in packet)
+                WriteCommand(command);
+            EndTransmission();
         }
     }
 }
