@@ -6,7 +6,7 @@ using Omega.Client.FileSystem;
 
 namespace Omega.Client
 {
-    public partial class Packet : IEnumerable<Command>
+    public class Packet : IEnumerable<Command>
     {
         private readonly Queue<Command> commands
             = new Queue<Command>();
@@ -39,7 +39,31 @@ namespace Omega.Client
 
         #endregion
 
-        #region SetMemory
+        #region TEXT
+
+        public void WriteText(IEnumerable<TextFile> files)
+        {
+            foreach(var file in files)
+                Add(new WriteTextCommand(file));
+        }
+
+        public void WritePriorityMessage(string text, DisplayMode mode = DisplayMode.AutoMode)
+        {
+            var file = new TextFile(FileLabel.Priority) {
+                new TextFileLine(text, mode)
+            };
+
+            Add(new WriteTextCommand(file));
+        }
+
+        public void ClearPriorityMessage()
+        {
+            WritePriorityMessage("");
+        }
+
+        #endregion
+
+        #region SPECIAL
 
         public void SetMemory(FileTable config)
         {
@@ -56,8 +80,6 @@ namespace Omega.Client
             Add(new SetMemoryCommand());
         }
 
-        #endregion
-        
         public void Reset()
         {
             Add(new ResetCommand());
@@ -69,5 +91,7 @@ namespace Omega.Client
             Add(new SetDayCommand(datetime.DayOfWeek));
             Add(new SetTimeCommand(datetime));
         }
+
+        #endregion
     }
 }

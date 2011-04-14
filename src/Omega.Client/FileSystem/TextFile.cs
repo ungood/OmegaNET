@@ -32,20 +32,6 @@ namespace Omega.Client.FileSystem
         public TextFile(FileLabel label)
             : base(label) {}
 
-        #region IEnumerable<TextFileLine> Members
-
-        public IEnumerator<TextFileLine> GetEnumerator()
-        {
-            return lines.GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-
-        #endregion
-
         public void Add(TextFileLine line)
         {
             lines.Add(line);
@@ -96,5 +82,19 @@ namespace Omega.Client.FileSystem
                     yield return b;
             }
         }
+
+        #region IEnumerable<TextFileLine> Members
+
+        public IEnumerator<TextFileLine> GetEnumerator()
+        {
+            return lines.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        #endregion
     }
 }

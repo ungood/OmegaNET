@@ -1,0 +1,23 @@
+﻿<Window x:Class="Omega.BitmapViewer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="*" />
+      </Grid.ColumnDefinitions>
+      
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="*" />
+        <RowDefinition Height="*" />
+      </Grid.RowDefinitions>
+
+    <Button Grid.Row="0" Grid.ColumnSpan="2" Content="Load..." Click="LoadImage" />
+    <Image Grid.Row="1" Grid.Column="0" x:Name="original" />
+    <Image Grid.Row="1" Grid.Column="1" x:Name="monochrome" />
+    <Image Grid.Row="2" Grid.Column="0" x:Name="tricolor" />
+    <Image Grid.Row="2" Grid.Column="1" x:Name="eightcolor" />
+  </Grid>
+</Window>

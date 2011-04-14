@@ -48,6 +48,9 @@ namespace Omega.Client.Demo
                 new TextFile('B') {
                     SpecialGraphic.DontDrinkAndDrive
                 },
+                new TextFile('E') {
+                    {"THE WEATHER IS WARM WITH A CHANCE OF RAIN..."},
+                },
                 new TextFile('C') {
                     {"WELCOME TO BLACKFIN<line/>NOW 100% MORE", DisplayMode.Scroll},
                     {"<wide>XTREME</wide>", SpecialMode.Sparkle}
@@ -56,7 +59,7 @@ namespace Omega.Client.Demo
             };
             
             var packet = new Packet();
-            packet.SetMemory(new FileTable(files));
+            packet.SetMemory(files);
             packet.WriteText(files);
             return packet;
         }
@@ -72,15 +75,8 @@ namespace Omega.Client.Demo
             };
             files.AddRange(DemoGraphics());
 
-
-            var memory = new FileTable();
-            foreach(var file in files)
-                memory.Add(file);
-            packet.SetMemory(memory);
-
-
-            foreach(var file in files)
-                packet.Add(new WriteTextCommand(file));
+            packet.SetMemory(files);
+            packet.WriteText(files);
 
             return packet;
         }
@@ -107,10 +103,8 @@ namespace Omega.Client.Demo
                 {"WIPE OUT", DisplayMode.WipeOut},
                 {"SCROLL", DisplayMode.Scroll},
                 {"AUTOMODE", DisplayMode.AutoMode},
-                {
-                    "ROTATE COMPRESSED ROTATE COMPRESSED ROTATE COMPRESSED ROTATE COMPRESSED ROTATE COMPRESSED ROTATE",
-                    DisplayMode.CompressedRotate
-                    },
+                {"ROTATE COMPRESSED ROTATE COMPRESSED ROTATE COMPRESSED ROTATE COMPRESSED ROTATE COMPRESSED ROTATE",
+                    DisplayMode.CompressedRotate},
                 {"EXPLODE", DisplayMode.Explode},
                 {"CLOCK", DisplayMode.Clock}
             };
@@ -178,10 +172,7 @@ namespace Omega.Client.Demo
         private static TextFile DemoExtendedChars()
         {
             return new TextFile('M') {
-                {
-                    "\x15ÇüéâäàåçêëèïîìÄÅÉæÆôöòûùÿÖÜ¢£¥℞ƒáíóúñÑªº¿°¡ øØćĆčČđÐŠžŽΒšβÁÀÃãÊÍÕõ€\x08\x63↑↓←→",
-                    DisplayMode.Rotate
-                    }
+                {"\x15ÇüéâäàåçêëèïîìÄÅÉæÆôöòûùÿÖÜ¢£¥℞ƒáíóúñÑªº¿°¡ øØćĆčČđÐŠžŽΒšβÁÀÃãÊÍÕõ€\x08\x63↑↓←→", DisplayMode.Rotate}
             };
         }
 
