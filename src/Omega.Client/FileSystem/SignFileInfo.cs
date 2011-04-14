@@ -4,7 +4,7 @@
     {
         Text    = 0x41,
         String  = 0x42,
-        Picture = 0x43
+        Picture = 0x44,
     }
 
     public enum FileProtection : byte

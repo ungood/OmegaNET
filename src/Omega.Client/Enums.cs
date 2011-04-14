@@ -26,7 +26,7 @@ namespace Omega.Client
         STX = 0x02,
         ETX = 0x03,
         EOT = 0x04,
-
+        CR  = 0x0D,
         ESC = 0x1B
     }
 

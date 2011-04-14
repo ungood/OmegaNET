@@ -51,6 +51,7 @@
     <Compile Include="Commands\SetRunDayTableCommand.cs" />
     <Compile Include="Commands\SetRunSequenceCommand.cs" />
     <Compile Include="Commands\SetTimeCommand.cs" />
+    <Compile Include="Commands\WritePictureCommand.cs" />
     <Compile Include="Commands\WriteSpecialCommand.cs" />
     <Compile Include="Commands\WriteStringCommand.cs" />
     <Compile Include="Commands\WriteTextCommand.cs" />

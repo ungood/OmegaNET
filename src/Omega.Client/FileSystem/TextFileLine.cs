@@ -1,36 +1,54 @@
 ﻿namespace Omega.Client.FileSystem
 {
-    public class TextFileLine
+    public class TextMode
     {
         public DisplayPosition Position { get; set; }
-        public DisplayMode Mode { get; set; }
+        public DisplayMode DisplayMode { get; set; }
         public SpecialMode SpecialMode { get; set; }
         public SpecialGraphic SpecialGraphic { get; set; }
+
+        public TextMode(DisplayMode display, DisplayPosition position = DisplayPosition.Middle)
+        {
+            DisplayMode = display;
+            Position = position;
+        }
+
+        public TextMode(SpecialMode special, DisplayPosition position = DisplayPosition.Middle)
+            : this(DisplayMode.Special, position)
+        {
+            SpecialMode = special;
+        }
+
+        public TextMode(SpecialGraphic graphic, DisplayPosition position = DisplayPosition.Middle)
+            : this(DisplayMode.Special, position)
+        {
+            SpecialGraphic = graphic;
+        }
+    }
+
+    public class TextFileLine
+    {
+        public TextMode Mode { get; set; }
         public string Text { get; set; }
 
         public TextFileLine() {}
 
-        public TextFileLine(string text, DisplayMode mode = DisplayMode.AutoMode,
-            DisplayPosition position = DisplayPosition.Middle)
+        public TextFileLine(string text, TextMode mode = null)
         {
             Text = text;
-            Position = position;
             Mode = mode;
         }
 
-        public TextFileLine(string text, SpecialMode mode, DisplayPosition position = DisplayPosition.Middle)
-        {
-            Text = text;
-            Position = position;
-            Mode = DisplayMode.Special;
-            SpecialMode = mode;
-        }
+        public TextFileLine(string text, DisplayMode display, DisplayPosition position = DisplayPosition.Middle)
+            : this(text, new TextMode(display, position))
+        {}
+
+        public TextFileLine(string text, SpecialMode special, DisplayPosition position = DisplayPosition.Middle)
+            : this(text, new TextMode(special, position))
+        {}
 
         public TextFileLine(SpecialGraphic graphic, DisplayPosition position = DisplayPosition.Middle)
-        {
-            Position = position;
-            Mode = DisplayMode.Special;
-            SpecialGraphic = graphic;
-        }
+            : this(null, new TextMode(graphic, position))
+        {}
     }
 }

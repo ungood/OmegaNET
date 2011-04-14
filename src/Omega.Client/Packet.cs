@@ -14,7 +14,7 @@ namespace Omega.Client
         public SignType SignType { get; set; }
         public SignAddress Address { get; set; }
 
-        public Packet(SignType type = SignType.AllSignsVerify, SignAddress address = null)
+        public Packet(SignType type = SignType.AllSigns, SignAddress address = null)
         {
             SignType = type;
             Address = address ?? SignAddress.Broadcast;

@@ -44,12 +44,12 @@ namespace Omega.BitmapViewer
 
             var bmp = new BitmapImage(new Uri(dialog.FileName, UriKind.Absolute));
 
-            //monochrome.Width = tricolor.Width = eightcolor.Width = 400;
+            monochrome.Width = tricolor.Width = eightcolor.Width = bmp.Width;
 
             original.Source = bmp;
-            monochrome.Source = BitmapHelper.SwapPalette(bmp, ColorFormat.Monochrome);
-            tricolor.Source = BitmapHelper.SwapPalette(bmp, ColorFormat.TriColor);
-            eightcolor.Source = BitmapHelper.SwapPalette(bmp, ColorFormat.EightColor);
+            monochrome.Source = BitmapHelper.Dither(bmp, ColorFormat.Monochrome);
+            tricolor.Source = BitmapHelper.Dither(bmp, ColorFormat.TriColor);
+            eightcolor.Source = BitmapHelper.Dither(bmp, ColorFormat.EightColor);
         }
     }
 }

@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Omega.Client.FileSystem;
+﻿using Omega.Client.FileSystem;
 using Omega.Client.Formatting;
 using NUnit.Framework;
 
-namespace Omega.Client.Test
+namespace Omega.Client.Test.Examples
 {
     [TestFixture]
     class TextFileExamples

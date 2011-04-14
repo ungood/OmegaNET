@@ -37,15 +37,19 @@ namespace Omega.Client.FileSystem
             lines.Add(line);
         }
 
-        public void Add(string text, DisplayMode mode = DisplayMode.AutoMode,
-            DisplayPosition position = DisplayPosition.Middle)
+        public void Add(string text)
         {
-            lines.Add(new TextFileLine(text, mode, position));
+            lines.Add(new TextFileLine(text));
         }
 
-        public void Add(string text, SpecialMode mode, DisplayPosition position = DisplayPosition.Middle)
+        public void Add(string text, DisplayMode display, DisplayPosition position = DisplayPosition.Middle)
         {
-            lines.Add(new TextFileLine(text, mode, position));
+            lines.Add(new TextFileLine(text, display, position));
+        }
+
+        public void Add(string text, SpecialMode special, DisplayPosition position = DisplayPosition.Middle)
+        {
+            lines.Add(new TextFileLine(text, special, position));
         }
 
         public void Add(SpecialGraphic graphic, DisplayPosition position = DisplayPosition.Middle)
@@ -64,15 +68,18 @@ namespace Omega.Client.FileSystem
             yield return Label;
             foreach(var line in lines)
             {
-                yield return (byte) Ascii.ESC;
-                yield return (byte) line.Position;
-                yield return (byte) line.Mode;
+                if(line.Mode != null)
+                {
+                    yield return (byte) Ascii.ESC;
+                    yield return (byte) line.Mode.Position;
+                    yield return (byte) line.Mode.DisplayMode;
 
-                if(line.SpecialMode != SpecialMode.None)
-                    yield return (byte) line.SpecialMode;
+                    if(line.Mode.SpecialMode != SpecialMode.None)
+                        yield return (byte) line.Mode.SpecialMode;
 
-                if(line.SpecialGraphic != SpecialGraphic.None)
-                    yield return (byte) line.SpecialGraphic;
+                    if(line.Mode.SpecialGraphic != SpecialGraphic.None)
+                        yield return (byte) line.Mode.SpecialGraphic;
+                }
 
                 if(line.Text == null)
                     yield break;

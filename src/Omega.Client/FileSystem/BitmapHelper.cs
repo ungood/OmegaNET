@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -20,16 +21,25 @@ namespace Omega.Client.FileSystem
             Colors.Yellow
         };
 
-        public static BitmapSource SwapPalette(BitmapSource source, ColorFormat format)
+        public static BitmapSource Dither(BitmapSource source, ColorFormat format)
         {
+            if(source.Format == PixelFormats.Indexed8)
+            {
+                var rgb = new FormatConvertedBitmap();
+                rgb.BeginInit();
+                rgb.Source = source;
+                rgb.DestinationFormat = PixelFormats.Rgb24;
+                rgb.EndInit();
+                source = rgb;
+            }
+
             var dest = new FormatConvertedBitmap();
             dest.BeginInit();
 
             dest.Source = source;
-
-            var colors = ColorList.Take((int)format).ToList();
+            var numColors = (int)Math.Pow(2, (int) format);
+            var colors = ColorList.Take(numColors).ToList();
             dest.DestinationPalette = new BitmapPalette(colors);
-
             dest.DestinationFormat = PixelFormats.Indexed8;
             dest.EndInit();
 
@@ -43,10 +53,12 @@ namespace Omega.Client.FileSystem
             source.CopyPixels(buffer, stride, 0);
 
             var bytes = new byte[source.PixelWidth, source.PixelHeight];
-            for(int x = 0; x < source.PixelWidth; x++)
+            for(int y = 0; y < source.PixelHeight; y++)
             {
-                for(int y = 0; y < source.PixelHeight; y++)
-                    bytes[x, y] = buffer[(y * source.PixelHeight) + x];
+                for(int x = 0; x < source.PixelWidth; x++)
+                {
+                    bytes[x, y] = buffer[(y * stride) + x];
+                }
             }
 
             return bytes;

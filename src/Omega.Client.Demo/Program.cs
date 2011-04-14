@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO.Ports;
 using System.Threading;
+using System.Windows.Media.Imaging;
 using Omega.Client.Commands;
 using Omega.Client.Connection;
 using Omega.Client.FileSystem;
@@ -22,10 +23,10 @@ namespace Omega.Client.Demo
             {
                 conn.Open();
 
-                //Clear(conn);
+                //conn.Send(Clear());
                 //Thread.Sleep(10000);
 
-                conn.Send(BlackfinDemo());
+                conn.Send(DemoPicture());
                 //DemoWriteTextCommands(conn);
             }
 
@@ -174,6 +175,29 @@ namespace Omega.Client.Demo
             return new TextFile('M') {
                 {"\x15ÇüéâäàåçêëèïîìÄÅÉæÆôöòûùÿÖÜ¢£¥℞ƒáíóúñÑªº¿°¡ øØćĆčČđÐŠžŽΒšβÁÀÃãÊÍÕõ€\x08\x63↑↓←→", DisplayMode.Rotate}
             };
+        }
+
+        #endregion
+
+        #region Pictures
+
+        private static Packet DemoPicture()
+        {
+            var uri = new Uri("120x7-gradient.png", UriKind.Relative);
+            var image = new BitmapImage(uri);
+
+            var pic = new PictureFile('P', image, ColorFormat.Monochrome);
+            var text = new TextFile('A') {{"WARNING                    \x14P                           ", DisplayMode.Rotate}};
+
+            var files = new FileTable {
+                text, pic,
+            };
+
+            var packet = new Packet();
+            packet.SetMemory(files);
+            packet.Add(new WriteTextCommand(text));
+            packet.Add(new WritePictureCommand(pic));
+            return packet;
         }
 
         #endregion
