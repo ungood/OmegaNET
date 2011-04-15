@@ -37,7 +37,11 @@ namespace Omega.Client.FileSystem
             var swapped = BitmapHelper.Dither(bitmap, format);
             bytes = BitmapHelper.GetBytes(swapped);
         }
-        
+
+        public PictureFile(FileLabel label, string filename, ColorFormat format)
+            : this(label, new BitmapImage(new Uri(filename, UriKind.Relative)), format)
+        {}
+
         public override SignFileInfo CreateFileInfo()
         {
             return new PictureFileInfo(bytes.GetLength(0), bytes.GetLength(1), Format);

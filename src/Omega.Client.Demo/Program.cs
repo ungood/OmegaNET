@@ -183,11 +183,11 @@ namespace Omega.Client.Demo
 
         private static Packet DemoPicture()
         {
-            var uri = new Uri("120x7-gradient.png", UriKind.Relative);
+            var uri = new Uri("blackfin.png", UriKind.Relative);
             var image = new BitmapImage(uri);
 
-            var pic = new PictureFile('P', image, ColorFormat.Monochrome);
-            var text = new TextFile('A') {{"WARNING                    \x14P                           ", DisplayMode.Rotate}};
+            var text = new TextFile('A') {{"<picture B/>", DisplayMode.Rotate}};
+            var pic = new PictureFile('B', image, ColorFormat.Monochrome);
 
             var files = new FileTable {
                 text, pic,
@@ -197,6 +197,46 @@ namespace Omega.Client.Demo
             packet.SetMemory(files);
             packet.Add(new WriteTextCommand(text));
             packet.Add(new WritePictureCommand(pic));
+            return packet;
+        }
+
+        private static Packet DemoAnimation()
+        {
+            var text = new TextFile('A') {
+                new TextFileLine("<speed 5 /><picture 1/>", DisplayMode.Hold),
+                new TextFileLine("<speed 5 /><picture 2/>", DisplayMode.Hold),
+                new TextFileLine("<speed 5 /><picture 3/>", DisplayMode.Hold),
+                new TextFileLine("<speed 5 /><picture 4/>", DisplayMode.Hold),
+                new TextFileLine("<speed 5 /><picture 5/>", DisplayMode.Hold),
+                new TextFileLine("<speed 5 /><picture 6/>", DisplayMode.Hold),
+                new TextFileLine("<speed 5 /><picture 6/>", DisplayMode.Hold),
+                new TextFileLine("<speed 5 /><picture 5/> <picture 3/> <picture 1/> <picture 2/>", DisplayMode.Hold),
+                new TextFileLine("<speed 5 /><picture 4/> <picture 2/> <picture 1/> <picture 3/>", DisplayMode.Hold),
+                new TextFileLine("<speed 5 /><picture 3/> <picture 1/> <picture 2/> <picture 4/>", DisplayMode.Hold),
+                new TextFileLine("<speed 5 /><picture 2/> <picture 1/> <picture 3/> <picture 5/>", DisplayMode.Hold),
+                new TextFileLine("<speed 5 /><picture 1/> <picture 2/> <picture 4/> <picture 6/>", DisplayMode.Hold),
+            };
+
+            var pic1 = new PictureFile('1', "kirby/frame1.png", ColorFormat.Monochrome);
+            var pic2 = new PictureFile('2', "kirby/frame2.png", ColorFormat.Monochrome);
+            var pic3 = new PictureFile('3', "kirby/frame3.png", ColorFormat.Monochrome);
+            var pic4 = new PictureFile('4', "kirby/frame4.png", ColorFormat.Monochrome);
+            var pic5 = new PictureFile('5', "kirby/frame5.png", ColorFormat.Monochrome);
+            var pic6 = new PictureFile('6', "kirby/frame6.png", ColorFormat.Monochrome);
+
+            var packet = new Packet();
+            packet.SetMemory(new FileTable {
+                text,
+                pic1, pic2, pic3, pic4, pic5, pic6
+            });
+            packet.Add(new WriteTextCommand(text));
+            packet.Add(new WritePictureCommand(pic1));
+            packet.Add(new WritePictureCommand(pic2));
+            packet.Add(new WritePictureCommand(pic3));
+            packet.Add(new WritePictureCommand(pic4));
+            packet.Add(new WritePictureCommand(pic5));
+            packet.Add(new WritePictureCommand(pic6));
+
             return packet;
         }
 
