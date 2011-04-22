@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Text;
-using Omega.Client.FileSystem;
+using Omega.Client.Models;
 
 namespace Omega.Client.Commands
 {

@@ -60,14 +60,14 @@
     <Compile Include="Connection\Checksum.cs" />
     <Compile Include="Connection\PacketWriter.cs" />
     <Compile Include="Connection\StandardPacketFormat.cs" />
-    <Compile Include="FileSystem\FileTable.cs" />
-    <Compile Include="FileSystem\PictureFile.cs" />
-    <Compile Include="FileSystem\SignFile.cs" />
-    <Compile Include="FileSystem\SignFileInfo.cs" />
-    <Compile Include="FileSystem\StringFileInfo.cs" />
-    <Compile Include="FileSystem\BitmapHelper.cs" />
-    <Compile Include="FileSystem\TextFileInfo.cs" />
-    <Compile Include="FileSystem\TextFileLine.cs" />
+    <Compile Include="Models\FileTable.cs" />
+    <Compile Include="Models\PictureFile.cs" />
+    <Compile Include="Models\SignFile.cs" />
+    <Compile Include="Models\SignFileInfo.cs" />
+    <Compile Include="Models\StringFileInfo.cs" />
+    <Compile Include="Models\BitmapHelper.cs" />
+    <Compile Include="Models\TextFileInfo.cs" />
+    <Compile Include="Models\TextFileLine.cs" />
     <Compile Include="Formatting\ExtendedCharsFormatter.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -83,7 +83,7 @@
     <Compile Include="Formatting\TagFormatter.cs" />
     <Compile Include="IConnection.cs" />
     <Compile Include="Commands\Command.cs" />
-    <Compile Include="FileSystem\FileLabel.cs" />
+    <Compile Include="Models\FileLabel.cs" />
     <Compile Include="Connection\PacketFormat.cs" />
     <Compile Include="Connection\SerialConnection.cs" />
     <Compile Include="Packet.cs" />
@@ -91,8 +91,8 @@
     <Compile Include="Enums.cs" />
     <Compile Include="SignAddress.cs" />
     <Compile Include="StartStopTime.cs" />
-    <Compile Include="FileSystem\StringFile.cs" />
-    <Compile Include="FileSystem\TextFile.cs" />
+    <Compile Include="Models\StringFile.cs" />
+    <Compile Include="Models\TextFile.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

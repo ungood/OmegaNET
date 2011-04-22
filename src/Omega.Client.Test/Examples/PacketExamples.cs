@@ -2,7 +2,7 @@
 using Omega.Client.Commands;
 using Omega.Client.Connection;
 using NUnit.Framework;
-using Omega.Client.FileSystem;
+using Omega.Client.Models;
 using Omega.Client.Formatting;
 
 namespace Omega.Client.Test.Examples
