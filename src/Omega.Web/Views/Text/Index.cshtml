@@ -1,0 +1,13 @@
+@using Omega.Web.Models
+@model List<TextFileModel>
+@{
+    ViewBag.Title = "Text Files";
+    var grid = new WebGrid(Model, new[] { "Label", "Text" });
+}
+
+@grid.GetHtml(
+    columns: grid.Columns(
+        grid.Column("Label"),
+        grid.Column("Text")
+    )
+)

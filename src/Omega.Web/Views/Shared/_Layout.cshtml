@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Scripts/jquery-1.4.4.min.js")" type="text/javascript"></script>
+</head>
+<body>
+    <div class="page">
+
+        <div id="header">
+            <div id="title">
+                <h1>OmegaWeb</h1>
+            </div>
+
+            <div id="logindisplay">
+                @if(Request.IsAuthenticated) {
+                    <text>Welcome <b>@Context.User.Identity.Name</b>!</text>
+                }
+            </div>
+
+            <nav>
+                @Html.ActionLink("Text Files", "Index", "Text")
+            </nav>
+                
+        </div>
+
+        <div id="main">
+            @RenderBody()
+            <footer>
+                This is the footer.
+            </footer>
+        </div>
+    </div>
+</body>
+</html>
