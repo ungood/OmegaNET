@@ -7,7 +7,7 @@ using System.Windows.Media.Imaging;
 using Omega.Client;
 using Omega.Client.Commands;
 using Omega.Client.Connection;
-using Omega.Client.Models;
+using Omega.Client.Memory;
 
 namespace Omega.Demo
 {

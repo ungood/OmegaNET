@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Omega.Client.Models
+namespace Omega.Client.Memory
 {
     public abstract class SignFile
     {

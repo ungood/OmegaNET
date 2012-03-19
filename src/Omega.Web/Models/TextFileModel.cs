@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Omega.Client;
-using Omega.Client.Models;
+using Omega.Client.Memory;
 
 namespace Omega.Web.Models
 {

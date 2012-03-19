@@ -19,7 +19,7 @@ using System;
 using System.Windows;
 using System.Windows.Media.Imaging;
 using Microsoft.Win32;
-using Omega.Client.Models;
+using Omega.Client.Memory;
 
 namespace Omega.BitmapViewer
 {

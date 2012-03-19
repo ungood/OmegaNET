@@ -1,4 +1,4 @@
-﻿using Omega.Client.Models;
+﻿using Omega.Client.Memory;
 using Omega.Client.Formatting;
 using NUnit.Framework;
 

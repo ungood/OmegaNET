@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Omega.Client.Models
+namespace Omega.Client.Memory
 {
     public struct FileLabel
     {

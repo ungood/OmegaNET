@@ -20,7 +20,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Omega.Client.Models
+namespace Omega.Client.Memory
 {
     public class FileTable : IEnumerable<KeyValuePair<FileLabel, SignFileInfo>>
     {

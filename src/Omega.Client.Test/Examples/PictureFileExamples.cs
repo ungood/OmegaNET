@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Media.Imaging;
 using NUnit.Framework;
-using Omega.Client.Models;
+using Omega.Client.Memory;
 using Omega.Client.Formatting;
 
 namespace Omega.Client.Test.FileSystem

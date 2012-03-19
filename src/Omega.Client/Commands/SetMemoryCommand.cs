@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Text;
 using Omega.Client.Formatting;
-using Omega.Client.Models;
+using Omega.Client.Memory;
 
 namespace Omega.Client.Commands
 {

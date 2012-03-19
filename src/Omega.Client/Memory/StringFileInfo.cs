@@ -1,4 +1,4 @@
-﻿namespace Omega.Client.Models
+﻿namespace Omega.Client.Memory
 {
     public class StringFileInfo : SignFileInfo
     {

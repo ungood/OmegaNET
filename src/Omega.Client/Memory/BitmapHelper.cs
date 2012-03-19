@@ -5,7 +5,7 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-namespace Omega.Client.Models
+namespace Omega.Client.Memory
 {
     public static class BitmapHelper
     {

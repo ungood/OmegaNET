@@ -1,4 +1,4 @@
-﻿namespace Omega.Client.Models
+﻿namespace Omega.Client.Memory
 {
     public enum FileType : byte
     {

@@ -5,7 +5,7 @@ using System.Text;
 using System.Windows.Media.Imaging;
 using Omega.Client.Formatting;
 
-namespace Omega.Client.Models
+namespace Omega.Client.Memory
 {
     public enum ColorFormat : byte 
     {

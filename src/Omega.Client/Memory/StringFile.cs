@@ -3,7 +3,7 @@ using System.Linq;
 using System.Text;
 using Omega.Client.Formatting;
 
-namespace Omega.Client.Models
+namespace Omega.Client.Memory
 {
     public class StringFile : SignFile
     {

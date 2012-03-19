@@ -16,7 +16,7 @@
 #endregion
 
 using System.Collections.Generic;
-using Omega.Client.Models;
+using Omega.Client.Memory;
 
 namespace Omega.Client.Commands
 {
