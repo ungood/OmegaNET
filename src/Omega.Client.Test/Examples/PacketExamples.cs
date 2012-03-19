@@ -10,29 +10,23 @@ namespace Omega.Client.Test.Examples
     [TestFixture]
     public class PacketExamples
     {
-        private static string GetPacketData(Packet packet)
-        {
-            var stream = new MemoryStream();
-
-            var writer = new StandardPacketFormat().CreateWriter(stream);
-            writer.WritePacket(packet);
-
-            return stream.ToArray().PrettyPrint();
-        }
-
         [Test]
         // Example 7.6.2
         public void StandardTransmissionWithChecksum()
         {
-            var packet = new Packet {
-                new WriteTextCommand(new TextFile('A') {
-                    "HELLO"
-                })
-            };
+            using(var conn = new MemoryStreamConnection())
+            {
+                conn.Open();
 
-            var actual = GetPacketData(packet);
+                var packet = new Packet {
+                    new WriteTextCommand(new TextFile('A') {
+                        "HELLO"
+                    })
+                };
+                conn.Send(packet);
 
-            Assert.AreEqual("<NUL><NUL><NUL><NUL><NUL><SOH>Z00<STX>AAHELLO<ETX>01FB<EOT>", actual);
+                Assert.AreEqual("<NUL><NUL><NUL><NUL><NUL><SOH>Z00<STX>AAHELLO<ETX>01FB<EOT>", conn.ToString());
+            }
         }
     }
 }

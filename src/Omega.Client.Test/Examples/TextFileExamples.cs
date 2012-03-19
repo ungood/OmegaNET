@@ -11,8 +11,9 @@ namespace Omega.Client.Test.Examples
         [Test]
         public void RotateHello()
         {
-            var textFile = new TextFile('D');
-            textFile.Add("HELLO", DisplayMode.Rotate, DisplayPosition.Bottom);
+            var textFile = new TextFile('D') {
+                {"HELLO", DisplayMode.Rotate, DisplayPosition.Bottom}
+            };
             var bytes = textFile.GetBytes().PrettyPrint();
 
             Assert.AreEqual("D<ESC>&aHELLO", bytes);
@@ -21,10 +22,11 @@ namespace Omega.Client.Test.Examples
         [Test]
         public void CombiningTextAndGraphics()
         {
-            var textFile = new TextFile('>');
-            textFile.Add("Hello There", SpecialMode.Snow, DisplayPosition.Top);
-            textFile.Add("", DisplayMode.Rotate, DisplayPosition.Top);
-            textFile.Add("", SpecialMode.Welcome, DisplayPosition.Bottom);
+            var textFile = new TextFile('>') {
+                {"Hello There", SpecialMode.Snow, DisplayPosition.Top},
+                {"", DisplayMode.Rotate, DisplayPosition.Top},
+                {"", SpecialMode.Welcome, DisplayPosition.Bottom}
+            };
             var bytes = textFile.GetBytes().PrettyPrint();
 
             Assert.AreEqual("><ESC>\"n2Hello There<ESC>\"a<ESC>&n8", bytes);

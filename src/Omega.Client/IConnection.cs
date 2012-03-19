@@ -18,13 +18,33 @@
 #endregion
 
 using System;
+using Omega.Client.Commands;
 
 namespace Omega.Client
 {
-    public interface IConnection : IDisposable
+    public interface IConnection : ICommandHandler, IDisposable
     {
         void Open();
 
         void Send(Packet packet);
+
+        DisposablePacket CreatePacket(SignType type = SignType.AllSigns, SignAddress address = null);
+    }
+
+    public abstract class ConnectionBase : IConnection
+    {
+        public abstract void Dispose();
+        public abstract void Open();
+        public abstract void Send(Packet packet);
+
+        public void Handle(Command command)
+        {
+            Send(new Packet {command});
+        }
+
+        public DisposablePacket CreatePacket(SignType type = SignType.AllSigns, SignAddress address = null)
+        {
+            return new DisposablePacket(this, type, address ?? SignAddress.Broadcast);
+        }
     }
 }

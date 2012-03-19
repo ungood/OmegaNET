@@ -59,6 +59,8 @@
     <Compile Include="Connection\Checksum.cs" />
     <Compile Include="Connection\PacketWriter.cs" />
     <Compile Include="Connection\StandardPacketFormat.cs" />
+    <Compile Include="DisposablePacket.cs" />
+    <Compile Include="ICommandHandler.cs" />
     <Compile Include="Memory\FileTable.cs" />
     <Compile Include="Memory\PictureFile.cs" />
     <Compile Include="Memory\SignFile.cs" />

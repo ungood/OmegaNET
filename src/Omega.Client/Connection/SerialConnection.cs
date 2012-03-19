@@ -26,7 +26,7 @@ namespace Omega.Client.Connection
     /// <summary>
     /// An implementation of IConnection that communicates through the serial port.
     /// </summary>
-    public class SerialConnection : IConnection
+    public class SerialConnection : ConnectionBase
     {
         private readonly SerialPort port;
         
@@ -54,12 +54,12 @@ namespace Omega.Client.Connection
 
         public PacketFormat PacketFormat { get; set; }
         
-        public void Open()
+        public override void Open()
         {
             port.Open();
         }
 
-        public void Send(Packet packet)
+        public override void Send(Packet packet)
         {
             port.ReadTimeout = PacketFormat.ReadTimeout;
             port.WriteTimeout = PacketFormat.WriteTimeout;
@@ -72,7 +72,7 @@ namespace Omega.Client.Connection
 
         private bool isDisposed;
 
-        public void Dispose()
+        public override void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);

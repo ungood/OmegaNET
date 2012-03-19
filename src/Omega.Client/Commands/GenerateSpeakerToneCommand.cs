@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using Omega.Client.Commands;
 
-namespace Omega.Client.Commands
+namespace Omega.Client.Speaker
 {
     public class GenerateSpeakerToneCommand : WriteSpecialCommand
     {
-        public GenerateSpeakerToneCommand()
-            : base("\x29") {}
+        public GenerateSpeakerToneCommand(byte frequency, byte duration, byte repeat)
+            : base("(")
+        {
+            
+        }
 
         protected override IEnumerable<byte> GetSpecialFunctionData()
         {

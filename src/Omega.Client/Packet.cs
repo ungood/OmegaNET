@@ -1,12 +1,27 @@
-﻿using System;
+﻿#region License
+// Copyright 2012 Jason Walker
+// ungood@onetrue.name
+// 
+// Licensed under the Apache License, Version 2.0 (the "License"); 
+// you may not use this file except in compliance with the License. 
+// You may obtain a copy of the License at 
+// 
+//     http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS, 
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and 
+// limitations under the License.
+#endregion
+
 using System.Collections;
 using System.Collections.Generic;
 using Omega.Client.Commands;
-using Omega.Client.Memory;
 
 namespace Omega.Client
 {
-    public class Packet : IEnumerable<Command>
+    public class Packet : IEnumerable<Command>, ICommandHandler
     {
         private readonly Queue<Command> commands
             = new Queue<Command>();
@@ -20,12 +35,15 @@ namespace Omega.Client
             Address = address ?? SignAddress.Broadcast;
         }
 
+        public void Handle(Command command)
+        {
+            Add(command);
+        }
+
         public void Add(Command command)
         {
             commands.Enqueue(command);
         }
-
-        #region Implementation of IEnumerable
 
         public IEnumerator<Command> GetEnumerator()
         {
@@ -36,62 +54,5 @@ namespace Omega.Client
         {
             return GetEnumerator();
         }
-
-        #endregion
-
-        #region TEXT
-
-        public void WriteText(IEnumerable<TextFile> files)
-        {
-            foreach(var file in files)
-                Add(new WriteTextCommand(file));
-        }
-
-        public void WritePriorityMessage(string text, DisplayMode mode = DisplayMode.AutoMode)
-        {
-            var file = new TextFile(FileLabel.Priority) {
-                new TextFileLine(text, mode)
-            };
-
-            Add(new WriteTextCommand(file));
-        }
-
-        public void ClearPriorityMessage()
-        {
-            WritePriorityMessage("");
-        }
-
-        #endregion
-
-        #region SPECIAL
-
-        public void SetMemory(FileTable config)
-        {
-            Add(new SetMemoryCommand(config));
-        }
-
-        public void SetMemory(IEnumerable<SignFile> files)
-        {
-            SetMemory(new FileTable(files));
-        }
-
-        public void ClearMemory()
-        {
-            Add(new SetMemoryCommand());
-        }
-
-        public void Reset()
-        {
-            Add(new ResetCommand());
-        }
-
-        public void SetDateTime(DateTime datetime)
-        {
-            Add(new SetDateCommand(datetime));
-            Add(new SetDayCommand(datetime.DayOfWeek));
-            Add(new SetTimeCommand(datetime));
-        }
-
-        #endregion
     }
 }
