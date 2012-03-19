@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Media.Imaging;
+using Omega.Client.Formatting;
 
 namespace Omega.Client.Models
 {
@@ -61,7 +62,7 @@ namespace Omega.Client.Models
                 sb.Append("\x0D");
             }
 
-            foreach(var b in Encoding.UTF8.GetBytes(sb.ToString()))
+            foreach(var b in sb.ToString().ToAscii())
                 yield return b;
         }
     }

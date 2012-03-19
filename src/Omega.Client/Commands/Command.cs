@@ -18,53 +18,34 @@
 #endregion
 
 using System.Collections.Generic;
+using System.Text;
 using Omega.Client.Connection;
 
 namespace Omega.Client.Commands
 {
-    public enum CommandCode : byte
-    {
-        WriteText = (byte) 'A',
-        ReadText = (byte) 'B',
-
-        WriteSpecial = (byte) 'E',
-        ReadSpecial = (byte) 'F',
-
-        WriteString = (byte) 'G',
-        ReadString = (byte) 'H',
-
-        WriteSmallDotsPicture = (byte) 'I',
-        ReadSmallDotsPicture = (byte) 'J',
-
-        WriteRgbDotsPicture = (byte) 'K',
-        ReadRgbDotsPicture = (byte) 'L',
-
-        WriteLargeDotsPicture = (byte) 'M',
-        ReadLargeDotsPicture = (byte) 'N',
-
-        WriteBulletin = (byte) '0',
-        SetTimeoutMessage = (byte) 'T'
-    }
-
     public abstract class Command
     {
-        protected Command(CommandCode commandCode)
+        public byte CommandCode { get; private set; }
+        
+        protected Command(byte commandCode)
         {
             CommandCode = commandCode;
         }
 
-        public CommandCode CommandCode { get; private set; }
+        protected Command(char commandChar)
+            : this((byte)commandChar)
+        {}
 
         public abstract IEnumerable<byte> GetDataField();
-
+        
         public Checksum CalcChecksum()
         {
             var checksum = new Checksum();
-            checksum.Add((byte) Ascii.STX);
-            checksum.Add((byte) CommandCode);
+            checksum.Add(Ascii.STX);
+            checksum.Add(CommandCode);
             foreach(var b in GetDataField())
                 checksum.Add(b);
-            checksum.Add((byte) Ascii.ETX);
+            checksum.Add(Ascii.ETX);
 
             return checksum;
         }

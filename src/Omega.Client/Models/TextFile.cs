@@ -85,7 +85,7 @@ namespace Omega.Client.Models
                     yield break;
 
                 var formatted = line.Text.Format();
-                foreach(var b in Encoding.UTF8.GetBytes(formatted))
+                foreach(var b in formatted.ToAscii())
                     yield return b;
             }
         }

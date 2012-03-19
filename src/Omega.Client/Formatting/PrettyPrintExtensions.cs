@@ -31,9 +31,6 @@ namespace Omega.Client.Formatting
             if(Enum.IsDefined(typeof(Ascii), b))
                 return "<" + ((Ascii) b)+ ">";
             
-            if(b < 32)
-                return string.Format("<{0:x2}>", b);
-            
             return ((char) b).ToString();
         }
     }

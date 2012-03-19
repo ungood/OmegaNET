@@ -9,7 +9,5 @@ namespace Omega.Client.Connection
         public abstract int WriteTimeout { get; }
 
         public abstract PacketWriter CreateWriter(Stream stream);
-
-        public static readonly PacketFormat Standard = new StandardPacketFormat();
     }
 }

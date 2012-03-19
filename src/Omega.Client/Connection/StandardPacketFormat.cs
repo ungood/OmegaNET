@@ -74,7 +74,7 @@ namespace Omega.Client.Connection
                 WriteEnum(Ascii.STX);
                 Thread.Sleep(100);
 
-                WriteEnum(command.CommandCode);
+                WriteByte(command.CommandCode);
                 WriteBytes(command.GetDataField());
                 WriteEnum(Ascii.ETX);
                 Write(command.CalcChecksum().ToString());

@@ -1,6 +1,24 @@
-﻿using System.Collections.Generic;
+﻿#region License
+// Copyright 2012 Jason Walker
+// ungood@onetrue.name
+// 
+// Licensed under the Apache License, Version 2.0 (the "License"); 
+// you may not use this file except in compliance with the License. 
+// You may obtain a copy of the License at 
+// 
+//     http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS, 
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and 
+// limitations under the License.
+#endregion
+
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Omega.Client.Formatting;
 
 namespace Omega.Client.Commands
 {
@@ -9,14 +27,14 @@ namespace Omega.Client.Commands
         public string Function { get; private set; }
 
         protected WriteSpecialCommand(string function)
-            : base(CommandCode.WriteSpecial)
+            : base('F')
         {
             Function = function;
         }
 
         public override IEnumerable<byte> GetDataField()
         {
-            return Encoding.UTF8.GetBytes(Function)
+            return Function.ToAscii()
                 .Concat(GetSpecialFunctionData());
         }
 

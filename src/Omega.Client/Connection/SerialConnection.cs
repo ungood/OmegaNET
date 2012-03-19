@@ -39,12 +39,13 @@ namespace Omega.Client.Connection
 
         public SerialConnection(string portName,
             int baudRate = 4800,
-            Parity parity = Parity.Even,
-            int dataBits = 7,
-            StopBits stopBits = StopBits.Two)
+            Parity parity = Parity.Even)
         {
+            var dataBits = parity == Parity.None ? 8 : 7;
+            var stopBits = parity == Parity.None ? StopBits.One : StopBits.Two;
+
             port = new SerialPort(portName, baudRate, parity, dataBits, stopBits) {
-                Encoding = Encoding.UTF8,
+                Encoding = Encoding.ASCII,
                 Handshake = Handshake.None,
             };
 

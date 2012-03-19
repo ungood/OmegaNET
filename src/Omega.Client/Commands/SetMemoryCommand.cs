@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Text;
+using Omega.Client.Formatting;
 using Omega.Client.Models;
 
 namespace Omega.Client.Commands
@@ -20,9 +21,9 @@ namespace Omega.Client.Commands
                 yield return kvp.Key;
                 yield return (byte) kvp.Value.Type;
                 yield return kvp.Value.IsLocked ? (byte) 'L' : (byte) 'U';
-                foreach(var b in Encoding.UTF8.GetBytes(kvp.Value.GetSizeField()))
+                foreach(var b in kvp.Value.GetSizeField().ToAscii())
                     yield return b;
-                foreach(var b in Encoding.UTF8.GetBytes(kvp.Value.GetDataField()))
+                foreach(var b in kvp.Value.GetDataField().ToAscii())
                     yield return b;
             }
         }

@@ -25,7 +25,7 @@ namespace Omega.Client.Models
             yield return Label;
 
             var formatted = Text.Format();
-            foreach(var b in Encoding.UTF8.GetBytes(formatted))
+            foreach(var b in formatted.ToAscii())
                 yield return b;
         }
     }

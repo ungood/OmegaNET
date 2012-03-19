@@ -21,5 +21,10 @@ namespace Omega.Client.Formatting
         {
             return Formatters.Aggregate(input, (s, formatter) => formatter.Format(s));
         }
+
+        public static byte[] ToAscii(this string input)
+        {
+            return Encoding.ASCII.GetBytes(input);
+        }
     }
 }

@@ -34,7 +34,7 @@ namespace Omega.Client.Connection
 
         protected void Write(string s)
         {
-            WriteBytes(Encoding.UTF8.GetBytes(s));
+            WriteBytes(Encoding.ASCII.GetBytes(s));
         }
 
         public void WritePacket(Packet packet)

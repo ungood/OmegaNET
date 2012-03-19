@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Omega.Client.Formatting;
 
 namespace Omega.Client.Commands
 {
@@ -17,7 +18,7 @@ namespace Omega.Client.Commands
 
         protected override IEnumerable<byte> GetSpecialFunctionData()
         {
-            return Encoding.UTF8.GetBytes(Date.ToString("MMddyy"));
+            return Date.ToString("MMddyy").ToAscii();
         }
     }
 }

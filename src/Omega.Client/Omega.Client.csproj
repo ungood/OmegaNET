@@ -56,7 +56,6 @@
     <Compile Include="Commands\WriteSpecialCommand.cs" />
     <Compile Include="Commands\WriteStringCommand.cs" />
     <Compile Include="Commands\WriteTextCommand.cs" />
-    <Compile Include="Connection\AsyncConnection.cs" />
     <Compile Include="Connection\Checksum.cs" />
     <Compile Include="Connection\PacketWriter.cs" />
     <Compile Include="Connection\StandardPacketFormat.cs" />
