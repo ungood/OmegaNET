@@ -24,10 +24,12 @@ namespace Omega.Demo
             {
                 conn.Open();
 
+                //conn.WritePriorityMessage("Hello World!");
+                conn.SetDateTime(DateTime.Now);
                 //conn.Send(Clear());
                 //Thread.Sleep(10000);
 
-                conn.Send(DemoPicture());
+                //conn.Send(DemoPicture());
                 //DemoWriteTextCommands(conn);
             }
 
